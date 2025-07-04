@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - Gana+</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 30px;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #1c64f2;
+      text-align: center;
+    }
+    .info {
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+    .referido {
+      background: #e1f5fe;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    a {
+      color: #1c64f2;
+      word-break: break-all;
+    }
+    .boton-tarea {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    .boton-tarea:hover {
+      background-color: #218838;
+    }
+    .logout {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .logout a {
+      color: #dc3545;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bienvenido a Gana+</h1>
+
+    <div class="info">
+      <p><strong>Correo:</strong> {{ correo }}</p>
+      <p><strong>Saldo actual:</strong> ${{ saldo }} COP</p>
+      <p><strong>Tareas completadas:</strong> {{ tareas }}</p>
+      <p><strong>Referidos activos:</strong> {{ referidos }}</p>
+    </div>
+
+    <div class="referido">
+      <p><strong>Tu enlace de referidos:</strong></p>
+      <p><a href="{{ link_referido }}">{{ link_referido }}</a></p>
+    </div>
+
+    <form action="{{ url_for('completar_tarea') }}" method="get">
+      <button type="submit" class="boton-tarea">✅ Completar una tarea</button>
+<div style="margin-top: 20px; text-align: center;">
+  <a href="/tareas" style="padding: 10px 20px; background-color: #28a745; color: white; border-radius: 5px; text-decoration: none;">🎯 Ir a Tareas</a>
+</div>
+{% if mostrar_mensaje_bono %}
+<div style="background-color: #ffeaa7; color: #2d3436; padding: 15px; margin-bottom: 20px; border-radius: 8px;">
+  🎁 <strong>¡Fuiste invitado por otro usuario!</strong><br>
+  Completa <strong>3 tareas</strong> para que tú y tu referido reciban el bono de <strong>$5.000 COP</strong>.
+</div>
+{% endif %}
+
+<h2>💵 Solicitar Retiro</h2>
+<form method="POST" action="{{ url_for('solicitar_retiro') }}">
+  <label>Método:</label><br>
+  <select name="metodo" required>
+    <option value="Nequi">Nequi</option>
+    <option value="PayPal">PayPal</option>
+  </select><br><br>
+
+  <label>Número de cuenta (Nequi o correo PayPal):</label><br>
+  <input type="text" name="cuenta" placeholder="Ej: 3001234567 o micorreo@paypal.com" required><br><br>
+
+  <label>Valor a retirar:</label><br>
+  <input type="number" name="valor" min="25000" placeholder="Mínimo $25.000" required><br><br>
+
+  <button type="submit">Solicitar</button>
+</form>
+
+    </form>
+<h2>Historial de Retiros</h2>
+
+<table class="tabla-retiros">
+  <tr>
+    <th>Método</th>
+    <th>Cuenta</th>
+    <th>Valor</th>
+    <th>Estado</th>
+  </tr>
+  {% for retiro in retiros %}
+  <tr>
+    <td>{{ retiro[0] }}</td>
+    <td>{{ retiro[1] }}</td>
+    <td>${{ retiro[2] }}</td>
+    <td>{{ retiro[3] }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="4">Aún no has solicitado retiros.</td></tr>
+  {% endfor %}
+</table>
+
+
+    <div class="logout">
+      <p><a href="{{ url_for('logout') }}">Cerrar sesión</a></p>
+{% if session['correo'] == 'tucorreo@gmail.com' %}
+  <div style="margin-top: 20px; text-align: center;">
+    <a href="/admin" style="padding: 10px 20px; background-color: #444; color: white; border-radius: 5px; text-decoration: none;">🔒 Panel de Administrador</a>
+  </div>
+{% endif %}
+
+    </div>
+  </div>
+</body>
+</html>
+<style>
+  .tabla-retiros {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    font-family: Arial, sans-serif;
+  }
+
+  .tabla-retiros th,
+  .tabla-retiros td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .tabla-retiros th {
+    background-color: #f1f1f1;
+  }
+
+  .tabla-retiros tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+</style>
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gana+ - Tareas</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    h1 { text-align: center; color: #333; }
+    iframe { border: none; width: 100%; height: 600px; }
+    .volver { margin-top: 20px; text-align: center; }
+    .volver a {
+      background: #007bff; color: white; padding: 10px 20px;
+      border-radius: 5px; text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Completa ofertas y gana saldo</h1>
+
+  <!-- Aquí va tu muro de AdGem o el que tengas aprobado -->
+  <iframe src="https://wall.adgem.com/USER_ID" allow="fullscreen"></iframe>
+<div style="text-align: center; margin-top: 20px;">
+  <form action="/completar_tarea" method="POST">
+    <button type="submit" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px;">
+      ✅ He completado una tarea
+    </button>
+  </form>
+</div>
+
+  <div class="volver">
+    <a href="/dashboard">⬅ Volver al Panel</a>
+  </div>
+</body>
+</html>

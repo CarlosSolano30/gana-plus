@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio - Gana+</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f8ff;
+      padding: 40px;
+      text-align: center;
+      color: #333;
+    }
+    h1 {
+      color: #1c64f2;
+    }
+    .boton {
+      display: inline-block;
+      padding: 12px 20px;
+      margin: 10px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+    .boton:hover {
+      background-color: #0056b3;
+    }
+    .footer {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>¡Bienvenido a Gana+!</h1>
+  <p>Gana dinero completando tareas y refiriendo amigos</p>
+  <p>Más de <strong>1.000</strong> usuarios registrados 🚀</p>
+
+  <a href="{{ url_for('register') }}" class="boton">Registrarse</a>
+  <a href="{{ url_for('login') }}" class="boton">Iniciar sesión</a>
+   <div class="footer">
+    <p>&copy; 2025 Gana+. Todos los derechos reservados.</p>
+  </div>
+</body>
+</html>
+ <a href="{{ url_for('terminos') }}" class="boton">Términos y condiciones</a>
+
+<a href="{{ url_for('privacidad') }}" class="boton">Política de privacidad</a>
+
+

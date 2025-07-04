@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Términos y Condiciones - Gana+</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f8fc;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #1c64f2;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #1c64f2;
+      margin-top: 30px;
+    }
+
+    ul {
+      line-height: 1.8;
+      padding-left: 20px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: white;
+      background-color: #007bff;
+      padding: 10px 18px;
+      border-radius: 6px;
+    }
+
+    a:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Términos y Condiciones</h1>
+
+    <p>Al usar Gana+, aceptas las siguientes condiciones para garantizar una experiencia segura y justa para todos nuestros usuarios:</p>
+
+    <h2>📋 Reglas Generales</h2>
+    <ul>
+      <li>Está prohibido registrar múltiples cuentas por persona.</li>
+      <li>No se permite el uso de herramientas automatizadas (bots o VPNs).</li>
+      <li>Los usuarios deben completar tareas reales ofrecidas por nuestros socios.</li>
+      <li>Nos reservamos el derecho de suspender cuentas sospechosas sin previo aviso.</li>
+    </ul>
+
+    <h2>💰 Retiros</h2>
+    <ul>
+      <li>El monto mínimo de retiro es de <strong>$25.000 COP</strong>.</li>
+      <li>Solo puedes solicitar un retiro si completaste al menos 1 tarea y tienes 1 referido activo.</li>
+      <li>Los retiros se procesan en un plazo de <strong>3 a 5 días hábiles</strong>.</li>
+    </ul>
+
+    <h2>🛡️ Protección y Confianza</h2>
+    <ul>
+      <li>Monitoreamos actividad sospechosa mediante IP y comportamiento del usuario.</li>
+      <li>Todos los datos están protegidos y no serán compartidos con terceros.</li>
+    </ul>
+
+    <a href="{{ url_for('index') }}">← Volver al inicio</a>
+  </div>
+</body>
+</html>

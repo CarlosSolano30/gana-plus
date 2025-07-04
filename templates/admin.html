@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Panel de Administrador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            color: #444;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background-color: #eee;
+        }
+        .btn {
+            background-color: #00bbf9;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #009cd1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Panel de Retiros - Administrador</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Correo</th>
+            <th>Método</th>
+            <th>Cuenta</th>
+            <th>Valor</th>
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+        {% for retiro in retiros %}
+        <tr>
+            <td>{{ retiro[0] }}</td>
+            <td>{{ retiro[1] }}</td>
+            <td>{{ retiro[2] }}</td>
+            <td>{{ retiro[3] }}</td>
+            <td>${{ retiro[4] }}</td>
+            <td>{{ retiro[5] }}</td>
+            <td>
+                {% if retiro[5] == 'pendiente' %}
+                    <a href="{{ url_for('marcar_pagado', retiro_id=retiro[0]) }}" class="btn">Marcar como pagado</a>
+                {% else %}
+                    Pagado
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

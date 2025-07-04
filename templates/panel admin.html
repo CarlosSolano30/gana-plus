@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Administrador - Gana+</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f1f1f1; padding: 20px; }
+    h1 { text-align: center; color: #333; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    th { background-color: #008cba; color: white; }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+    .btn-confirmar { background-color: green; color: white; padding: 5px 10px; border: none; cursor: pointer; border-radius: 4px; }
+    .btn-confirmar:hover { background-color: darkgreen; }
+  </style>
+</head>
+<body>
+  <h1>Panel de Administrador</h1>
+
+  <h2>Usuarios Registrados</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Saldo</th>
+        <th>Tareas</th>
+        <th>Referidos</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for usuario in usuarios %}
+      <tr>
+        <td>{{ usuario[0] }}</td>
+        <td>{{ usuario[1] }}</td>
+        <td>{{ usuario[2] }}</td>
+        <td>${{ usuario[4] }}</td>
+        <td>{{ usuario[5] }}</td>
+        <td>{{ usuario[6] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Retiros Pendientes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Método</th>
+        <th>Cuenta</th>
+        <th>Valor</th>
+        <th>Estado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for retiro in retiros %}
+      <tr>
+        <td>{{ retiro[0] }}</td>
+        <td>{{ retiro[1] }}</td>
+        <td>{{ retiro[2] }}</td>
+        <td>{{ retiro[5] }}</td>
+        <td>${{ retiro[3] }}</td>
+        <td>{{ retiro[4] }}</td>
+        <td>
+          {% if retiro[4] == 'pendiente' %}
+          <form method="POST" action="/confirmar_retiro">
+            <input type="hidden" name="retiro_id" value="{{ retiro[0] }}">
+            <button class="btn-confirmar" type="submit">Confirmar</button>
+          </form>
+          {% else %}✔ Pagado{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
