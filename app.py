@@ -220,3 +220,13 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    @app.route('/ayet_callback', methods=['GET'])
+def ayet_callback():
+    user_id = request.args.get('user_id')
+    amount = request.args.get('amount')
+    transaction_id = request.args.get('transaction_id')
+
+    print(f"Usuario: {user_id}, Ganó: {amount}, Transacción: {transaction_id}")
+
+    return jsonify({'status': 'ok'}), 200
+
