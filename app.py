@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for 
+from flask import Flask, render_template, request, redirect, session, url_for, jsonify
 import sqlite3
 import os
 
@@ -37,6 +37,18 @@ def crear_tabla_usuarios():
 
 crear_tabla_usuarios()
 
+def agregar_campo_referido():
+    conn = sqlite3.connect('usuarios.db')
+    cursor = conn.cursor()
+    try:
+        cursor.execute('ALTER TABLE usuarios ADD COLUMN referido_por INTEGER')
+        conn.commit()
+    except sqlite3.OperationalError:
+        pass  # Ya existe
+    conn.close()
+
+agregar_campo_referido()
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -63,18 +75,6 @@ def register():
             return "Correo o teléfono ya registrados."
 
     return render_template('register.html')
-def agregar_campo_referido():
-    conn = sqlite3.connect('usuarios.db')
-    cursor = conn.cursor()
-    try:
-        cursor.execute('ALTER TABLE usuarios ADD COLUMN referido_por INTEGER')
-        conn.commit()
-    except sqlite3.OperationalError:
-        pass  # Ya existe
-    conn.close()
-
-agregar_campo_referido()
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -108,10 +108,7 @@ def dashboard():
     datos = cursor.fetchone()
     conn.close()
 
-    # Crear link único para referir
     link_referido = f"http://localhost:5000/register?ref={session['usuario_id']}"
-
-    # Detectar si fue referido y aún no ha hecho 3 tareas
     mostrar_mensaje_bono = datos[3] is not None and datos[1] < 3
 
     return render_template(
@@ -123,7 +120,6 @@ def dashboard():
         link_referido=link_referido,
         mostrar_mensaje_bono=mostrar_mensaje_bono
     )
-
 
 @app.route('/tareas')
 def tareas():
@@ -185,6 +181,7 @@ def solicitar_retiro():
     conn.close()
 
     return redirect(url_for('dashboard'))
+
 @app.route('/marcar_pagado/<int:retiro_id>')
 def marcar_pagado(retiro_id):
     if 'usuario_id' not in session:
@@ -204,22 +201,18 @@ def marcar_pagado(retiro_id):
     conn.close()
     return redirect(url_for('admin'))
 
-
 @app.route('/terminos')
 def terminos():
     return render_template('terms.html')
+
 @app.route('/privacidad')
 def privacidad():
     return render_template('terms.html')
-
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
-
-if __name__ == '__main__':
-    from flask import request, jsonify
 
 @app.route('/ayet_callback', methods=['GET'])
 def ayet_callback():
@@ -230,4 +223,8 @@ def ayet_callback():
     print(f"Usuario: {user_id}, Ganó: {amount}, Transacción: {transaction_id}")
 
     return jsonify({'status': 'ok'}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
