@@ -219,8 +219,9 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    @app.route('/ayet_callback', methods=['GET'])
+    from flask import request, jsonify
+
+@app.route('/ayet_callback', methods=['GET'])
 def ayet_callback():
     user_id = request.args.get('user_id')
     amount = request.args.get('amount')
